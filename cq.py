@@ -1,7 +1,7 @@
 ############################### 72 chars ###############################
 
 
-class CircularQueue:
+class CircularQueue: # make List as the superclass??
     """
     Circular Queue implemented as Array.
 
@@ -15,8 +15,17 @@ class CircularQueue:
     """
 
     def __init__(self, size: int):
+        """
+        Rules:
+        Empty -> head = -1
+        Full -> tail = -1
+        """
         # Delete the line below and write your code here
-        raise NotImplementedError("__init__ not implemented")
+        # super().__init__([None] * size) maybe?
+        self.cq = [None] * size
+        self.head = -1
+        self.tail = 0
+        self.size = size
 
     def __repr__(self) -> str:
         return f"CircularQueue({self.size})"
@@ -33,7 +42,21 @@ class CircularQueue:
         Return: None
         """
         # Delete the line below and write your code here
-        raise NotImplementedError("enqueue not implemented")
+        if self.tail == -1:
+            raise Exception("Queue is full")
+        self.cq[self.tail] = data
+        self.tail = (self.tail + 1) % self.size
+        if self.head == -1:
+            pos = 0
+            for i in range(self.size):
+                if not (self.cq[i] is None):
+                    break
+                pos += 1
+            self.head = pos
+        if self.head == self.tail:
+            self.tail = -1
+        return
+
 
     def dequeue(self) -> "item":
         """
@@ -46,4 +69,21 @@ class CircularQueue:
         Return: item
         """
         # Delete the line below and write your code here
-        raise NotImplementedError("dequeue not implemented")
+        if self.head == -1:
+            raise Exception("Queue is empty")
+        data = self.cq[self.head]
+        self.cq[self.head] = None
+        self.head = (self.head + 1) % self.size
+        if self.tail == -1:
+            pos = 0
+            for i in range(self.size):
+                if not (self.cq[i] is None):
+                    break
+                pos += 1
+            self.tail = pos
+        if self.head == self.tail:
+            self.head = -1
+        return data
+    
+    def contains(self, item) -> bool:
+        return item in self.cq

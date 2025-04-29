@@ -39,7 +39,7 @@ class Stack(LinkedList):
         Returns: None
         """
         # Replace the line below with your code
-        raise NotImplementedError
+        self.insert(1, item)
 
     def pop(self) -> "item":
         """
@@ -54,7 +54,12 @@ class Stack(LinkedList):
         Raises: Empty - if stack is already empty
         """
         # Replace the line below with your code
-        raise NotImplementedError
+        if self.length() == 0:
+            raise Empty
+        last = self.get(1)
+        self.delete(1)
+        return last
+
 
 
 # Queue can also inherit from Array
@@ -87,7 +92,7 @@ class Queue(LinkedList):
         Returns: None
         """
         # Replace the line below with your code
-        raise NotImplementedError
+        self.append(item)
 
     def dequeue(self) -> "item":
         """
@@ -102,4 +107,8 @@ class Queue(LinkedList):
         Raises: Empty - if queue is already empty
         """
         # Replace the line below with your code
-        raise NotImplementedError
+        if self.length() == 0:
+            raise Empty
+        first = self.get(1)
+        self.delete(1)
+        return first

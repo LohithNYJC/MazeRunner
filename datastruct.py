@@ -23,7 +23,8 @@ class Node:
 
     def __init__(self, data):
         # Replace the line below with your code
-        raise NotImplementedError
+        self.data = data
+        self.next = None
 
     def __repr__(self) -> str:
         return f'Node({self.get()})'
@@ -37,7 +38,7 @@ class Node:
 
         Return: data
         """
-        return self._data
+        return self.data
 
 
 class LinkedList:
@@ -77,7 +78,12 @@ class LinkedList:
         Return: int
         """
         # Replace the line below with your code
-        raise NotImplementedError
+        count = 0
+        current = self._head
+        while current is not None:
+            count += 1
+            current = current.next
+        return count
 
     def get(self, n: int) -> "item":
         """Returns item at n-th node.
@@ -92,7 +98,12 @@ class LinkedList:
         Raises: IndexError if n > length
         """
         # Replace the line below with your code
-        raise NotImplementedError
+        if n > self.length():
+            raise IndexError("Index out of range")
+        current = self._head
+        for i in range(n-1):
+          current = current.next
+        return current.data
 
     def insert(self, n: int, item) -> None:
         """Insert item into linkedlist at position n.
@@ -109,7 +120,21 @@ class LinkedList:
         Raises: IndexError if n > length
         """
         # Replace the line below with your code
-        raise NotImplementedError
+        new_node = Node(item)
+        if not self.length():
+            self._head = new_node
+            return
+        if n > self.length():
+            raise IndexError("Index out of range")
+        if n == 1:
+            new_node.next = self._head  
+            self._head = new_node  
+            return
+        current = self._head
+        for i in range(n):
+            current = current.next
+        new_node.next = current.next
+        current.next = new_node
 
     def append(self, item) -> None:
         """Append item at the end of linkedlist.
@@ -122,7 +147,16 @@ class LinkedList:
         Returns: None
         """
         # Replace the line below with your code
-        raise NotImplementedError
+        current = self._head
+        new_node = Node(item)
+        if self._head is None:
+            self._head = new_node
+            return 
+        while current is not None:
+            if current.next is None:
+                current.next = new_node
+                return
+            current = current.next
 
     def delete(self, n: int) -> None:
         """Delete n-th item from linkedlist.
@@ -137,7 +171,20 @@ class LinkedList:
         Raises: IndexError if n > length
         """
         # Replace the line below with your code
-        raise NotImplementedError
+        counter = 0 
+        if n > self.length():
+            raise IndexError("Index out of range")
+        current = self._head
+        if n == 1:
+            self._head = current.next
+            return
+        previous = None     
+        while counter != n:
+          previous = current
+          current = current.next
+          counter += 1
+        if current is not None:
+          previous.next = current.next
        
     def contains(self, item) -> bool:
         """Checks whether an item is in the linkedlist and returns
@@ -152,4 +199,33 @@ class LinkedList:
         otherwise False
         """
         # Replace the line below with your code
-        raise NotImplementedError
+        current = self._head
+        while current:
+            if current.data == item:
+                return True
+            current = current.next
+        return False
+
+
+# d = LinkedList()
+# d.append(10)
+# print(d.length())
+# d.append(20)
+# d.append(30)
+# d.append(40)
+# print(d.length())
+# print()
+# print(d.get(2))
+# print(d.contains(12))
+# d.insert(1,25)
+# print(d.get(1))
+# d.insert(1,20)
+# print(d.get(2))
+# d.insert(1,15)
+# print(d.get(3))
+# d.insert(1,10)
+# print(d.get(4))
+# print(d.length())
+# print(d.get(3))
+# d.delete(3)
+# 10 20 25 30 40

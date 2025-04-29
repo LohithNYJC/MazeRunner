@@ -131,8 +131,8 @@ class Maze:
                     print(char['wall'], end='')
                 elif here and (y, x) == here:
                     print(char['here'], end='')
-                # elif options and (y, x) in options:
-                elif options and options.contains((y, x)):
+                # elif options and (y, x) in options: # For Circular Queues
+                elif options and options.contains((y, x)): # for Queues and Stacks
                     print(char['option'], end='')
                 elif visited and (y, x) in visited:
                     print(char['visited'], end='')
